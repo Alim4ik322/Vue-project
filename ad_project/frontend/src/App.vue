@@ -19,35 +19,19 @@
 
       <!-- Список навигации -->
       <v-list dense>
-        <v-list-item>
+        <v-list-item v-for="link in links" :key="link.title" link>
           <template v-slot:prepend>
-            <v-icon icon="mdi-cake-variant"></v-icon>
+            <v-icon :icon="link.icon"></v-icon>
           </template>
-          <v-list-item-title>Link One</v-list-item-title>
-        </v-list-item>
-        <v-list-item>
-          <template v-slot:prepend>
-            <v-icon icon="mdi-home"></v-icon>
-          </template>
-          <v-list-item-title>Link Two</v-list-item-title>
-        </v-list-item>
-        <v-list-item>
-          <template v-slot:prepend>
-            <v-icon icon="mdi-information"></v-icon>
-          </template>
-          <v-list-item-title>Link Three</v-list-item-title>
+          <v-list-item-title>{{ link.title }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
     <!-- Верхняя панель -->
     <v-app-bar app dark color="primary">
-      <!-- Кнопка-гамбургер -->
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-
       <v-spacer></v-spacer>
-
-      <!-- Кнопки справа -->
       <v-toolbar-items class="hidden-sm-and-down">
         <v-btn>
           <v-icon start icon="mdi-cake-variant"></v-icon>
@@ -58,7 +42,7 @@
       </v-toolbar-items>
     </v-app-bar>
 
-    <!-- Основное содержимое -->
+    <!-- Основная часть -->
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -69,7 +53,12 @@
 export default {
   data() {
     return {
-      drawer: false
+      drawer: false,
+      links: [
+        { title: 'Link One', icon: 'mdi-cake-variant' },
+        { title: 'Link Two', icon: 'mdi-home' },
+        { title: 'Link Three', icon: 'mdi-information' },
+      ],
     }
   }
 }
