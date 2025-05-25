@@ -1,48 +1,33 @@
 <template>
   <v-app>
-    <!-- Боковое меню -->
-    <v-navigation-drawer app v-model="drawer">
-      <!-- Заголовок -->
-      <v-list-item>
-        <v-list-item-content>
-          <v-list-item-title class="title">
-            КИПУ
-          </v-list-item-title>
-          <v-list-item-subtitle>
-            Учебный проект
-          </v-list-item-subtitle>
-        </v-list-item-content>
+    <v-navigation-drawer v-model="drawer" app>
+      <v-list-item
+        v-for="link in links"
+        :key="link.title"
+        :to="link.url"
+        link
+      >
+        <template v-slot:prepend>
+          <v-icon :icon="link.icon"></v-icon>
+        </template>
+        <v-list-item-title>{{ link.title }}</v-list-item-title>
       </v-list-item>
-
-      <!-- Разделитель -->
-      <v-divider></v-divider>
-
-      <!-- Список навигации -->
-      <v-list dense>
-        <v-list-item v-for="link in links" :key="link.title" link>
-          <template v-slot:prepend>
-            <v-icon :icon="link.icon"></v-icon>
-          </template>
-          <v-list-item-title>{{ link.title }}</v-list-item-title>
-        </v-list-item>
-      </v-list>
     </v-navigation-drawer>
 
-    <!-- Верхняя панель -->
     <v-app-bar app dark color="primary">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="drawer = !drawer" />
       <v-spacer></v-spacer>
-      <v-toolbar-items class="hidden-sm-and-down">
-        <v-btn>
-          <v-icon start icon="mdi-cake-variant"></v-icon>
-          Link One
-        </v-btn>
-        <v-btn>Link Two</v-btn>
-        <v-btn>Link Three</v-btn>
-      </v-toolbar-items>
+      <v-btn
+        v-for="link in links"
+        :key="link.title"
+        :to="link.url"
+        text
+      >
+        <v-icon start :icon="link.icon"></v-icon>
+        {{ link.title }}
+      </v-btn>
     </v-app-bar>
 
-    <!-- Основная часть -->
     <v-main>
       <router-view></router-view>
     </v-main>
@@ -53,13 +38,19 @@
 export default {
   data() {
     return {
-      drawer: false,
+      drawer: true,
       links: [
-        { title: 'Link One', icon: 'mdi-cake-variant' },
-        { title: 'Link Two', icon: 'mdi-home' },
-        { title: 'Link Three', icon: 'mdi-information' },
-      ],
+        { title: 'Home', url: '/', icon: 'mdi-home' },
+        { title: 'Ads', url: '/list', icon: 'mdi-format-list-bulleted' },
+        { title: 'New Ad', url: '/new', icon: 'mdi-plus-box' },
+        { title: 'Orders', url: '/orders', icon: 'mdi-cart' },
+        { title: 'Login', url: '/login', icon: 'mdi-login' },
+        { title: 'Register', url: '/registration', icon: 'mdi-account-plus' }
+      ]
     }
   }
 }
 </script>
+
+<style scoped>
+</style>
