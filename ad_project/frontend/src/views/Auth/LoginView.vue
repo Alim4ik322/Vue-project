@@ -8,22 +8,23 @@
           </v-toolbar>
 
           <v-card-text>
-            <v-form>
+            <v-form v-model="valid" ref="form">
               <v-text-field
                 prepend-icon="mdi-account"
                 name="email"
                 label="Email"
                 type="email"
                 v-model="email"
-              ></v-text-field>
-
+                :rules="emailRules"
+              />
               <v-text-field
                 prepend-icon="mdi-lock"
                 name="password"
                 label="Password"
                 type="password"
                 v-model="password"
-              ></v-text-field>
+                :rules="passwordRules"
+              />
             </v-form>
           </v-card-text>
 
@@ -42,8 +43,16 @@ export default {
   data() {
     return {
       email: "",
-      password: ""
-
+      password: "",
+      valid: false,
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+      passwordRules: [
+        v => !!v || "Password is required",
+        v => (v && v.length >= 6) || "Password must be at least 6 characters"
+      ]
     };
   }
 };
