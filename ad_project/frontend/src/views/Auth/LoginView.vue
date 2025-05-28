@@ -14,6 +14,7 @@
                 name="email"
                 label="Email"
                 type="email"
+                v-model="email"
               ></v-text-field>
 
               <v-text-field
@@ -21,6 +22,7 @@
                 name="password"
                 label="Password"
                 type="password"
+                v-model="password"
               ></v-text-field>
             </v-form>
           </v-card-text>
@@ -38,7 +40,11 @@
 <script>
 export default {
   data() {
-    return {};
+    return {
+      email: "",
+      password: ""
+
+    };
   }
 };
 </script>
