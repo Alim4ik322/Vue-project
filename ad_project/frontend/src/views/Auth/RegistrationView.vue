@@ -19,11 +19,11 @@
               />
               <v-text-field
                 prepend-icon="mdi-lock"
-                name="password"
-                label="Password"
+                name="confirm-password"
+                label="Confirm Password"
                 type="password"
-                v-model="password"
-                :rules="passwordRules"
+                v-model="confirmPassword"
+                :rules="confirmPasswordRules"
               />
             </v-form>
           </v-card-text>
@@ -48,6 +48,7 @@ export default {
     return {
       email: "",
       password: "",
+      confirmPassword: "",
       valid: false,
       emailRules: [
         v => !!v || "E-mail is required",
@@ -56,19 +57,23 @@ export default {
       passwordRules: [
         v => !!v || "Password is required",
         v => (v && v.length >= 6) || "Password must be at least 6 characters"
+      ],
+          confirmPasswordRules: [
+          v => !!v || 'Password is required',
+          v => v === this.password || 'Password should match'
       ]
     };
   },
   methods: {
-		onSubmit(){
-			if (this.$refs.form.validate()){
-				const user = {
-					email: this.email,
-					password: this.password
-				}
-				console.log(user)
-			}
-		}
+    onSubmit(){
+      if (this.$refs.form.validate()){
+        const user = {
+          email: this.email,
+          password: this.password
+        }
+        console.log(user)
+      }
+    }
   }
 };
 </script>
