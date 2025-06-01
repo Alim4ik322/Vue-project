@@ -37,7 +37,38 @@
 <script>
 export default {
   data () {
-    return {}
+    return {
+      ads: [
+        {
+          title: "First",
+          desc: "First Desc",
+          promo: true,
+          src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
+          id: "1"
+        },
+        {
+          title: "Second",
+          desc: "Second Desc",
+          promo: true,
+          src: "https://cdn.vuetifyjs.com/images/carousel/sky.jpg",
+          id: "2"
+        },
+        {
+          title: "Third",
+          desc: "Third Desc",
+          promo: true,
+          src: "https://cdn.vuetifyjs.com/images/carousel/bird.jpg",
+          id: "3"
+        },
+        {
+          title: "Fourth",
+          desc: "Fourth Desc",
+          promo: true,
+          src: "https://cdn.vuetifyjs.com/images/carousel/planet.jpg",
+          id: "4"
+        }
+      ]
+    }
   }
 }
 </script>
