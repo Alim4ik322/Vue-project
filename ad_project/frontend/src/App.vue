@@ -16,6 +16,12 @@
 
     <v-app-bar app dark color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
+      
+      <v-toolbar-title>
+      <v-btn to="/" text>Home</v-btn>
+      </v-toolbar-title>
+      
+      
       <v-spacer></v-spacer>
       <v-btn
         v-for="link in links"
