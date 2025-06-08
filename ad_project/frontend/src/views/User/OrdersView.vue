@@ -14,6 +14,7 @@
                 <v-checkbox
                   v-model="order.done"
                   color="primary"
+                  @click="markDone(order)"
                 ></v-checkbox>
               </v-list-item-action>
             </template>
@@ -58,4 +59,9 @@ const orders = ref([
     done: false
   }
 ])
+
+function markDone(order) {
+  order.done = !order.done
+  console.log(`Order ${order.id} done:`, order.done)
+}
 </script>
