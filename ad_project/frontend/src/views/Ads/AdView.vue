@@ -4,7 +4,7 @@
       <v-col cols="12">
         <v-card class="mt-5">
           <v-img
-            height="400px"
+            height="300px"
             src="https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
             cover
           ></v-img>
@@ -34,6 +34,10 @@
 
 <script>
 export default {
-  name: 'AdDetailView'
+  data () { 
+		return {
+		} 	
+	}
+
 }
 </script>
