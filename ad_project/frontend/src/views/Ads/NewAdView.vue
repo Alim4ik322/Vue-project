@@ -47,44 +47,33 @@
   </v-container>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-const form = ref(null)
-const valid = ref(false)
-const title = ref('')
-const description = ref('')
-const promo = ref(false)
-const src = ref('https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg') // временное изображение
-const loading = ref(false)
-
-function uploadImage() {
-  // Заглушка — позже можно добавить input type="file" и FileReader
-  console.log('Upload clicked')
-}
-
-function createAd() {
-  if (!form.value?.validate()) return
-
-  loading.value = true
-
-  const ad = {
-    title: title.value,
-    desc: description.value,
-    promo: promo.value,
-    src: src.value,
-    id: Date.now().toString(),
+<script>
+export default {
+  data() {
+    return {
+      valid: false,
+      title: '',
+      description: '',
+      promo: false,
+      src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
+      loading: false
+    }
+  },
+  methods: {
+    uploadImage() {
+      console.log('Upload clicked')
+    },
+    createAd(){
+      if (this.$refs.form.validate()){
+        const ad = {
+          title: this.title,
+          desc: this.description,
+          promo: this.promo,
+          src: "https://cdn.vuetifyjs.com/images/cards/cooking.png"
+        }
+        console.log(ad)
+      }
+    }
   }
-
-  console.log('Created ad:', ad)
-
-  setTimeout(() => {
-    loading.value = false
-    // Сброс полей формы
-    title.value = ''
-    description.value = ''
-    promo.value = false
-    // при необходимости — перенаправление
-  }, 1000)
 }
 </script>
