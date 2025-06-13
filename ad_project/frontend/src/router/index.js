@@ -10,7 +10,7 @@ import OrdersView from '../views/User/OrdersView.vue'
 
 const routes = [
   { path: '/', name: 'home', component: HomeView },
-  { path: '/ad/:id', name: 'ad', component: AdView },
+  { path: '/ad/:id', name: 'ad', component: AdView, props:true },
   { path: '/list', name: 'list', component: AdListView },
   { path: '/new', name: 'newAd', component: NewAdView },
   { path: '/login', name: 'login', component: LoginView },
