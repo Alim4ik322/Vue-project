@@ -37,6 +37,22 @@
     <v-main>
       <router-view></router-view>
     </v-main>
+    <v-snackbar
+      v-model="error"
+      multi-line
+      :timeout="2000"
+      color="primary"
+    >
+      {{ error }}
+      <template v-slot:actions>
+        <v-btn
+          variant="text"
+          @click="closeError"
+        >
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -53,6 +69,16 @@ export default {
         { title: 'Login', url: '/login', icon: 'mdi-login' },
         { title: 'Register', url: '/registration', icon: 'mdi-account-plus' }
       ]
+    }
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error
+    }
+  },
+  methods: {
+    closeError() {
+      this.$store.dispatch('clearError')
     }
   }
 }
