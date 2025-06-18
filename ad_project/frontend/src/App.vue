@@ -12,26 +12,44 @@
         </template>
         <v-list-item-title>{{ link.title }}</v-list-item-title>
       </v-list-item>
+      <v-list-item
+        @click="onLogout"
+        v-if="isUserLoggedIn"
+      >
+        <template v-slot:prepend>
+          <v-icon icon="mdi-exit-to-app"></v-icon>
+        </template>
+        <v-list-item-title>Logout</v-list-item-title>
+      </v-list-item>
     </v-navigation-drawer>
 
     <v-app-bar app dark color="primary">
       <v-app-bar-nav-icon @click="drawer = !drawer" />
       
       <v-toolbar-title>
-      <v-btn to="/" text>Home</v-btn>
+        <v-btn to="/" variant="text">Home</v-btn>
       </v-toolbar-title>
       
-      
       <v-spacer></v-spacer>
-      <v-btn
-        v-for="link in links"
-        :key="link.title"
-        :to="link.url"
-        text
-      >
-        <v-icon start :icon="link.icon"></v-icon>
-        {{ link.title }}
-      </v-btn>
+      <v-toolbar-items class="hidden-sm-and-down">
+        <v-btn
+          v-for="link in links"
+          :key="link.title"
+          :to="link.url"
+          variant="text"
+        >
+          <v-icon start :icon="link.icon"></v-icon>
+          {{ link.title }}
+        </v-btn>
+        <v-btn
+          @click="onLogout"
+          v-if="isUserLoggedIn"
+          variant="text"
+        >
+          <v-icon start icon="mdi-exit-to-app"></v-icon>
+          Logout
+        </v-btn>
+      </v-toolbar-items>
     </v-app-bar>
 
     <v-main>
@@ -55,7 +73,6 @@
     </v-snackbar>
   </v-app>
 </template>
-
 <script>
 export default {
   data() {
@@ -98,6 +115,10 @@ export default {
   methods: {
     closeError() {
       this.$store.dispatch('clearError')
+    },
+    onLogout() {
+      this.$store.dispatch('logoutUser')
+      this.$router.push('/')
     }
   }
 }
