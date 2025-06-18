@@ -9,6 +9,7 @@
 
           <v-card-text>
             <v-form v-model="valid" ref="form" validation>
+              <v-alert v-if="error" type="error">{{ error }}</v-alert>
               <v-text-field
                 prepend-icon="mdi-account"
                 name="email"
@@ -31,9 +32,10 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn 
-            color="primary"
-            @click="onSubmit"
-            :disabled="!valid" 
+              color="primary"
+              @click="onSubmit"
+              :loading="loading"
+              :disabled="!valid || loading"
             >Login</v-btn>
           </v-card-actions>
         </v-card>
@@ -59,23 +61,30 @@ export default {
       ]
     };
   },
+  computed: {
+    loading() {
+      return this.$store.getters.loading
+    },
+    error() {
+      return this.$store.getters.error
+    }
+  },
   methods: {
-		onSubmit(){
-			if (this.$refs.form.validate()){
-				const user = {
-					email: this.email,
-					password: this.password
-				}
+    onSubmit() {
+      if (this.$refs.form.validate()) {
+        const user = {
+          email: this.email,
+          password: this.password
+        }
         this.$store.dispatch('loginUser', user)
-        .then(() => {
-          this.$router.push("/")
-        })
-        .catch((err) => {
-          console.log(err.message)
-        })
-				console.log(user)
-			}
-		}
+          .then(() => {
+            this.$router.push("/")
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    }
   }
 };
 </script>
