@@ -22,42 +22,48 @@
             class="mb-3"
           ></v-textarea>
 
-          <v-layout row>
-            <v-flex xs12>
-              <v-btn class="mt-3" color="warning">
+          <v-row>
+            <v-col xs="12">
+              <v-btn class="mt-3" color="warning" disabled>
                 Upload
                 <v-icon right dark>mdi-cloud-upload</v-icon>
               </v-btn>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
 
-          <v-layout row>
-            <v-flex xs12>
+          <v-row>
+            <v-col xs="12">
               <img
                 src="https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg"
                 height="150"
                 class="mt-3"
               />
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
 
-          <v-layout row>
-            <v-flex xs12>
+          <v-row>
+            <v-col xs="12">
               <v-switch
                 v-model="promo"
                 label="Ad to Promo?"
               ></v-switch>
-            </v-flex>
-          </v-layout>
+            </v-col>
+          </v-row>
 
-          <v-layout row>
-            <v-flex xs12>
+          <v-row>
+            <v-col xs="12">
               <v-spacer></v-spacer>
-              <v-btn color="success" @click="createAd">Create Ad</v-btn>
-            </v-flex>
-          </v-layout>
+              <v-btn
+                color="success"
+                :loading="loading"
+                :disabled="!valid || loading"
+                @click="createAd"
+              >
+                Create Ad
+              </v-btn>
+            </v-col>
+          </v-row>
         </v-form>
-
       </v-col>
     </v-row>
   </v-container>
@@ -68,23 +74,33 @@ export default {
   data() {
     return {
       valid: false,
-      title: "",
-      description: "",
+      title: '',
+      description: '',
       promo: false
-    };
+    }
+  },
+  computed: {
+    loading() {
+      return this.$store.getters['shared/loading']
+    }
   },
   methods: {
-    createAd() {
+    async createAd() {
       if (this.$refs.form.validate()) {
         const ad = {
           title: this.title,
           desc: this.description,
           promo: this.promo,
-          src: "https://cdn.vuetifyjs.com/images/cards/cooking.png"
-        };
-        this.$store.dispatch("createAd", ad);
+          src: 'https://cdn.vuetifyjs.com/images/cards/cooking.png'
+        }
+        try {
+          await this.$store.dispatch('ads/createAd', ad)
+          this.$router.push('/list')
+        } catch (error) {
+          // Ошибка отображается в снекбаре App.vue
+        }
       }
     }
   }
-};
+}
 </script>
