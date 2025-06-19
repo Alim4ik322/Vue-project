@@ -1,0 +1,47 @@
+<template>
+  <v-dialog v-model="modal" max-width="400px">
+    <template v-slot:activator="{ props }">
+      <v-btn v-bind="props" color="warning">Edit</v-btn>
+    </template>
+    <v-card class="pa-3">
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card-title>
+            <h1 class="text-h5 text-primary">Edit Ad</h1>
+          </v-card-title>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card-text>
+            Lorem ipsum.
+          </v-card-text>
+        </v-col>
+      </v-row>
+      <v-row justify="center">
+        <v-col cols="12">
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn variant="text" @click="modal = false">Cancel</v-btn>
+            <v-btn color="success" variant="flat" @click="save">Save</v-btn>
+          </v-card-actions>
+        </v-col>
+      </v-row>
+    </v-card>
+  </v-dialog>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      modal: false
+    }
+  },
+  methods: {
+    save() {
+      this.modal = false
+    }
+  }
+}
+</script>
