@@ -8,7 +8,7 @@
           <v-card-text>{{ ad.desc }}</v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <modal-dialog></modal-dialog>
+            <modal-dialog :ad="ad" v-if="isOwner"></modal-dialog>
             <v-btn class="success">Buy</v-btn>
           </v-card-actions>
         </v-card>
@@ -25,6 +25,9 @@ export default {
   computed: {
     ad() {
       return this.$store.getters['ads/adById'](this.id)
+    },
+    isOwner() {
+      return this.ad && user && this.ad.userId === user.id
     }
   },
   components: {
