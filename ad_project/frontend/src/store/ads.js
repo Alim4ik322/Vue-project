@@ -37,7 +37,7 @@ state: {
 
 },
 mutations: {
-    createAd(state, payload) {
+    addAd(state, payload) {
       state.ads.push(payload)
     },
     loadAds(state, payload) {
@@ -109,8 +109,8 @@ getters: {
 			return ad.userId == getters.user.id
 		})
 	},
-    adById(state) {
-        return id => state.ads.find(ad => ad.id == id)
+	adById: (state) => (id) => {
+      return state.ads.find(ad => ad.id === parseInt(id)) || null // Преобразуем id в число и возвращаем null, если не найдено
     }
 }
 }

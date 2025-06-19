@@ -19,6 +19,14 @@
               />
               <v-text-field
                 prepend-icon="mdi-lock"
+                name="password"
+                label="Password"
+                type="password"
+                v-model="password"
+                :rules="passwordRules"
+              />
+              <v-text-field
+                prepend-icon="mdi-lock"
                 name="confirm-password"
                 label="Confirm Password"
                 type="password"
@@ -30,11 +38,11 @@
 
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn 
-            color="primary"
-            @click="onSubmit"
-            :loading="loading"
-            :disabled="!valid || loading" 
+            <v-btn
+              color="primary"
+              @click="onSubmit"
+              :loading="loading"
+              :disabled="!valid || loading"
             >Create Account</v-btn>
           </v-card-actions>
         </v-card>
@@ -60,32 +68,36 @@ export default {
         v => (v && v.length >= 6) || "Password must be at least 6 characters"
       ],
       confirmPasswordRules: [
-          v => !!v || 'Password is required',
-          v => v === this.password || 'Password should match'
+        v => !!v || "Confirm Password is required",
+        () => (this.password === this.confirmPassword) || "Password should match"
       ]
     };
   },
   computed: {
     loading() {
+      console.log('Loading state:', this.$store.getters.loading)
       return this.$store.getters.loading
-	}
-},
-
-
+    }
+  },
   methods: {
-    onSubmit(){
-      if (this.$refs.form.validate()){
+    onSubmit() {
+      console.log('onSubmit called')
+      if (this.$refs.form.validate()) {
+        if (this.password !== this.confirmPassword) {
+          this.$refs.form.validate() // Повторная валидация для отображения ошибки
+          return
+        }
         const user = {
           email: this.email,
           password: this.password
         }
         this.$store.dispatch('registerUser', user)
-        .then(() => {
-          this.$router.push("/")
-        })
-        .catch((err) => {
-          console.log(err.message)
-        })
+          .then(() => {
+            this.$router.push("/")
+          })
+          .catch((err) => {
+            console.log(err.message)
+          })
         console.log(user)
       }
     }

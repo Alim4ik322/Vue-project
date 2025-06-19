@@ -21,48 +21,50 @@ export default {
     async registerUser({ commit }, { email, password }) {
       commit('clearError')
       commit('setLoading', true)
-      
-      let isRequestOk = false // Имитация успеха/неуспеха запроса
-      let promise = new Promise(function(resolve) {
-        setTimeout(() => resolve('Done'), 3000)
-      })
 
-      if (isRequestOk) {
-        await promise.then(() => {
-          commit('setUser', new User(1, email, password))
+      let isRequestOk = true // Изменено на true для теста успеха
+      try {
+        await new Promise(resolve => setTimeout(() => resolve('Done'), 3000))
+        if (isRequestOk) {
+          const user = new User(1, email, password)
+          commit('setUser', user)
           commit('setLoading', false)
-        })
-      } else {
-        await promise.then(() => {
+          return user
+        } else {
           commit('setLoading', false)
           commit('setError', 'Ошибка регистрации')
-          throw 'Упс... Ошибка регистрации'
-        })
+          throw new Error('Упс... Ошибка регистрации')
+        }
+      } catch (error) {
+        commit('setLoading', false)
+        commit('setError', error.message)
+        throw error
       }
     },
     async loginUser({ commit }, { email, password }) {
       commit('clearError')
       commit('setLoading', true)
-      let isRequestOk = false
-      let promise = new Promise(function(resolve) {
-        setTimeout(() => resolve('Done'), 3000)
-      })
-
-      if (isRequestOk) {
-        await promise.then(() => {
-          commit('setUser', new User(1, email, password))
+      let isRequestOk = true
+      try {
+        await new Promise(resolve => setTimeout(() => resolve('Done'), 3000))
+        if (isRequestOk) {
+          const user = new User(1, email, password)
+          commit('setUser', user)
           commit('setLoading', false)
-        })
-      } else {
-        await promise.then(() => {
+          return user
+        } else {
           commit('setLoading', false)
           commit('setError', 'Ошибка логина или пароля')
-          throw 'Упс... Ошибка логина или пароля'
-        })
+          throw new Error('Упс... Ошибка логина или пароля')
+        }
+      } catch (error) {
+        commit('setLoading', false)
+        commit('setError', error.message)
+        throw error
       }
     },
     logoutUser({ commit }) {
-      commit('setUser', null);
+      commit('setUser', null)
     }
   },
   getters: {
@@ -71,6 +73,6 @@ export default {
     }
   },
   isUserLoggedIn(state) {
-      return state.user !== null
+    return state.user !== null
   }
 }
