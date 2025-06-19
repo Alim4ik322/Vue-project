@@ -94,22 +94,6 @@ export default {
     },
     isUserLoggedIn () {
       return this.$store.getters.isUserLoggedIn
-    },
-    links() {
-      if (this.isUserLoggedIn) {
-        return [
-          { title: 'Home', url: '/', icon: 'mdi-home' },
-          { title: 'My ads', url: '/list', icon: 'mdi-view-list-outline' },
-          { title: 'New ad', url: '/new', icon: 'mdi-note-plus-outline' },
-          { title: 'Orders', url: '/orders', icon: 'mdi-bookmark-multiple-outline' }
-        ]
-      } else {
-        return [
-          { title: 'Home', url: '/', icon: 'mdi-home' },
-          { title: 'Login', url: '/login', icon: 'mdi-lock' },
-          { title: 'Registration', url: '/registration', icon: 'mdi-face' }
-        ]
-      }
     }
   },
   methods: {

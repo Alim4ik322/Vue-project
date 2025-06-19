@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import AuthGuard from './auth-guard'
+import AuthGuard from './auth_guard'
 
 import HomeView from '../views/HomeView.vue'
 import AdListView from '../views/Ads/AdListView.vue'
