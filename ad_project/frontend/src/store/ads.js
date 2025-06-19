@@ -42,10 +42,30 @@ mutations: {
   }
 },
 actions: {
-     createAd({ commit }, payload) {
-    payload.id = Math.random()
-    commit('createAd', payload)
-  }
+	async createAd({ commit, rootGetters }, payload) {
+      const user = rootGetters['user/user']
+      payload.id = String(Math.random().toString(36).slice(2)) // Улучшенная генерация ID
+      payload.userId = user ? user.id : '1' // Устанавливаем userId
+      commit('shared/clearError') // Мутация в модуле shared
+      commit('shared/setLoading', true) // Мутация в модуле shared
+      // Имитация запроса
+      let isRequestOk = true
+      let promise = new Promise(function(resolve) {
+        setTimeout(() => resolve('Done'), 3000)
+      })
+      if (isRequestOk) {
+        await promise.then(() => {
+          commit('createAd', payload)
+          commit('shared/setLoading', false)
+        })
+      } else {
+        await promise.then(() => {
+          commit('shared/setLoading', false)
+          commit('shared/setError', 'Ошибка создания объявления')
+          throw new Error('Упс... Ошибка создания объявления')
+        })
+      }
+    }
 },
 getters: {
     ads(state) {
