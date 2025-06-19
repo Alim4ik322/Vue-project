@@ -27,6 +27,7 @@ export default {
       return this.$store.getters['ads/adById'](this.id)
     },
     isOwner() {
+      const user = this.$store.getters['user/user']
       return this.ad && user && this.ad.userId === user.id
     }
   },
