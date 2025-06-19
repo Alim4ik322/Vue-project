@@ -38,8 +38,18 @@ state: {
 },
 mutations: {
     createAd(state, payload) {
-    state.ads.push(payload)
-  }
+      state.ads.push(payload)
+    },
+    loadAds(state, payload) {
+      state.ads = payload
+    },
+    updateAd(state, { title, desc, id }) {
+      const ad = state.ads.find(a => a.id === id)
+      if (ad) {
+        ad.title = title
+        ad.desc = desc
+      }
+    }
 },
 actions: {
 	async createAd({ commit, rootGetters }, payload) {
@@ -63,6 +73,26 @@ actions: {
           commit('shared/setLoading', false)
           commit('shared/setError', 'Ошибка создания объявления')
           throw new Error('Упс... Ошибка создания объявления')
+        })
+      }
+    },
+	async updateAd({ commit }, payload) {
+      commit('shared/clearError')
+      commit('shared/setLoading', true)
+      let isRequestOk = true
+      let promise = new Promise(function(resolve) {
+        setTimeout(() => resolve('Done'), 3000)
+      })
+      if (isRequestOk) {
+        await promise.then(() => {
+          commit('updateAd', payload)
+          commit('shared/setLoading', false)
+        })
+      } else {
+        await promise.then(() => {
+          commit('shared/setLoading', false)
+          commit('shared/setError', 'Ошибка редактирования объявления')
+          throw new Error('Упс... Ошибка редактирования объявления')
         })
       }
     }

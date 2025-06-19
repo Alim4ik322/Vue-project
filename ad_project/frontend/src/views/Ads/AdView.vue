@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import EditAdModal from './EditAdModal.vue'
+import EditAdModal from '../EditAdModal.vue'
 
 export default {
   props: ['id'],
