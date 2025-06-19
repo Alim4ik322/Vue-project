@@ -37,11 +37,6 @@ export default {
     return {
       modal: false
     }
-  },
-  methods: {
-    save() {
-      this.modal = false
-    }
   }
 }
 </script>
